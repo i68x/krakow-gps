@@ -1,0 +1,25 @@
+{
+  "framework": "nextjs",
+  "regions": ["cdg1"],
+  "buildCommand": "npm run vercel-build",
+  "functions": {
+    "src/app/api/gtfs-rt/route.js": { "maxDuration": 15 },
+    "src/app/api/vehicles/route.js": { "maxDuration": 20 },
+    "src/app/api/refresh/route.js": { "maxDuration": 15 }
+  },
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, s-maxage=3600" }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST" }
+      ]
+    }
+  ]
+}
